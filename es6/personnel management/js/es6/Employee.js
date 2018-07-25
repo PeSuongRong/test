@@ -7,6 +7,6 @@ class Employee{
         this.date_start = date_start;
         this.position_employee = position_employee;
 
-        this.compare_employee = [this.code_employee, this.name_employee, this.email_employee, this.pass_employee, this.date_start, this.position_employee];
+        this.compare_employee = [this.code_employee, this.name_employee, this.email_employee, this.date_start, this.position_employee]; // dont compare passwork
     }
 }
