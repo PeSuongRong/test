@@ -48,10 +48,26 @@ class Company{
 
     //edit employee
     edit_employee(edit_code){
-        let edit_code = this.search_index_employee(edit_code.code_employee);
-        this.List_Employee[vitri] = edit_code;
+        let index = this.search_index_employee(edit_code.code_employee);
+        this.List_Employee[index] = edit_code;
     }
-
-
-
+    sort_employ(type){
+        if(type === 1){
+           this.List_Employee.sort((a,b) =>{
+               let x = a.code_employee.toUpperCase();
+               let y = b.code_employee.toUpperCase();
+               if(x<y){return -1;}
+               if(x>y){return 1;}
+               return 0;
+           })
+        }else{
+            this.List_Employee.sort((a,b) =>{
+                let x = a.code_employee.toUpperCase();
+                let y = b.code_employee.toUpperCase();
+                if(x<y){return 1;}
+                if(x>y){return -1;}
+                return 0;
+            })
+        }
+    }
 }
