@@ -37,6 +37,7 @@ congty.addEmployee(nhanvien);
  delete_form = () =>{
     let input = document.getElementsByClassName("input-sm");
     for(let value_input of input ){
+        console.log(value_input);
         value_input.value = "";
     }
     document.getElementById("chucvu").selectedIndex = 0;
@@ -96,6 +97,7 @@ edit_employee = (id_employee)=>{
         tr.setAttribute("id", "tr"+i);
         tbody.appendChild(tr);
         for(let j = 0; j < nv.compare_employee.length; j++){
+            console.log(nv.compare_employee.length);
             td = document.createElement("td");
             if( nv.compare_employee[j] == '1'){
                 td.innerHTML = 'Sếp';
