@@ -1,6 +1,6 @@
 .sp-thongbao {
   color: red;
-  margin-left: 2px; 
+  margin-left: 2px;
   display: none;
 }
 
@@ -18,5 +18,13 @@
 
 
 .myCardHeader, .myCardFooter{
-	background-color: transparent;       
+	background-color: transparent;
+}
+
+nav ul.pagination li a{
+  background:transparent;
+  border: none;
+}
+nav ul.pagination li.active a{
+  background: #ACB6E5;
 }

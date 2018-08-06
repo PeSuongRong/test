@@ -75,15 +75,20 @@ delete_emp = (id_delete) =>{
         swal("Xóa thành công", "Dữ liệu đã được cập nhật", "success");
     })
 }
-
-var first_empl = 1;
-const showListEmployee=(list_empl_company)=>{
+var first_empl = 1;// li_page
+const showListEmployee=(list_empl_company, first_empl)=>{
     //phan trang
     let sum_empl = list_empl_company.length;
     let number_empl_one_page = 3;
     let sum_page = Math.ceil(sum_empl/number_empl_one_page);
     let ul = document.getElementById("ulPhanTrang");
     ul.innerHTML="";
+
+    let star_empl_page = (first_empl -1)*number_empl_one_page;
+    let end_empl_page = first_empl*number_empl_one_page; // nếu first_empl = 2 =>star=3 end =6: 0 1 2/ 3 4 5
+    let tbody = document.getElementById('tableDanhSach');
+    tbody.innerHTML = "";
+
     for(let i=1; i<= sum_page; i++){
         let a = document.createElement('a');
         a.setAttribute("class","page-link");
@@ -95,12 +100,8 @@ const showListEmployee=(list_empl_company)=>{
         ul.appendChild(li);
         click_number_page(id_li);
     }
-
     //xuất mảng nhân viên
-    let star_empl_page = (first_empl -1)*number_empl_one_page;
-    let end_empl_page = first_empl*number_empl_one_page; // nếu first_empl = 2 =>star=3 end =6: 0 1 2/ 3 4 5
-    let tbody = document.getElementById('tableDanhSach');
-    tbody.innerHTML = "";
+
     if(sum_empl<end_empl_page){
         end_empl_page = sum_empl;
     }
@@ -146,7 +147,7 @@ document.getElementById('btnCapNhatNV').addEventListener('click', ()=>{
     let new_position_emp = document.getElementById('chucvu').selectedIndex;
     let new_emp_edit = [new_id_emp, new_name_emp, new_email_emp, new_pass_emp, new_date_emp, new_position_emp];
     Company.edit_eml(new_emp_edit);
-    showListEmployee(Company.list_eml);
+    showListEmployee(Company.list_eml,first_empl);
     swal("Chỉnh sửa thành công", "Dữ liệu đã được cập nhật", "success")
 })
 
@@ -155,37 +156,31 @@ click_number_page = (id_number_page) =>{
     document.getElementById(id_number_page).addEventListener('click',()=>{
         let array_id_page =id_number_page.split('_');
         first_empl = array_id_page[1];
-        showListEmployee(Company.list_eml);
+        showListEmployee(Company.list_eml, first_empl);
+        document.getElementById(id_number_page).setAttribute("class", "active");
     })
 }
 
 //add nhân viên
 document.getElementById('btnThemNV').addEventListener('click', ()=>{
-    $('input').each(function(){
-        let input = this.val();
-        if(input !== ""){
-            let new_id = document.getElementById('msnv').value;
-            let new_name = document.getElementById('name').value;
-            let new_email = document.getElementById('email').value;
-            let new_pass = document.getElementById('password').value;
-            let new_date = document.getElementById('datepicker').value;
-            let new_position = document.getElementById('chucvu').selectedIndex;
-            let new_array = [new_id, new_name, new_email, new_pass,new_date, new_position];
-            Company.addEml(new_array);
-            showListEmployee(Company.list_eml);
-            deleteForm();
-        }
-        else{
-            console.log('Ban chua hoan thnah');
-        }
-    })
+    let new_id = document.getElementById('msnv').value;
+    let new_name = document.getElementById('name').value;
+    let new_email = document.getElementById('email').value;
+    let new_pass = document.getElementById('password').value;
+    let new_date = document.getElementById('datepicker').value;
+    let new_position = document.getElementById('chucvu').selectedIndex;
 
+    let new_array = [new_id, new_name, new_email, new_pass,new_date, new_position];
+    Company.addEml(new_array);
+    showListEmployee(Company.list_eml,first_empl);
+    deleteForm();
 })
 
 //tìm kiếm
 document.getElementById('searchName').addEventListener('keyup', ()=>{
     let key = document.getElementById("searchName").value;
     let array = Company.search_name(key);
-    showListEmployee(array.list_eml);
+    let first_empl = 1;
+    showListEmployee(array.list_eml,first_empl);
 })
-showListEmployee(Company.list_eml);
+showListEmployee(Company.list_eml, first_empl);
