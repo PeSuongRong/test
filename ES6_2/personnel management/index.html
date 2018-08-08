@@ -131,11 +131,11 @@
 							<thead class="text-primary">
 								<tr>
 									<th class="nowrap">
-										<span class="mr-1">Mã nhân viên</span>
+										<span class="mr-1">Mã NV</span>
 										<i class="fa fa-arrow-up" id="SapXepTang"></i>
 										<i class="fa fa-arrow-down" id="SapXepGiam"></i>
 									</th>
-									<th>Họ và tên nhân viên</th>
+									<th>Họ & tên nhân viên</th>
 									<th>Email</th>
 									<th>Ngày vào làm</th>
 									<th>Chức vụ</th>
@@ -188,7 +188,7 @@
 								<div class="input-group-prepend">
 									<span class="input-group-text"><i class="fa fa-user"></i></span>
 								</div>
-								<input type="msnv" name="msnv" id="msnv" class="form-control input-sm" placeholder="Mã số nhân viên">
+								<input onkeypress=" return isNumberKey(event)" type="msnv" name="msnv" id="msnv" class="form-control input-sm" placeholder="Mã số nhân viên">
 							</div>
 
 							<span class="sp-thongbao" id="tbMaNV"></span>

@@ -43,5 +43,20 @@ class company{
             }
         }
         return list_search;
+    }
+    sort_employ(type){
+        if(type === 1){
+            this.list_eml.sort((a,b) =>{
+                let x = a[0];
+                let y = b[0];
+                return x-y;
+            })
+        }else{
+            this.list_eml.sort((a,b)=>{
+                let x = a[0];
+                let y = b[0];
+                return y-x;
+            })
         }
     }
+}

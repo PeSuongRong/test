@@ -3,8 +3,10 @@
   margin-left: 2px;
   display: none;
 }
-
-#SapXepGiam{
+#SapXepTang, #SapXepGiam{
+  cursor: pointer;
+}
+#SapXepTang{
 	display: none;
 }
 
@@ -16,7 +18,6 @@
 
 }
 
-
 .myCardHeader, .myCardFooter{
 	background-color: transparent;
 }
@@ -25,6 +26,6 @@ nav ul.pagination li a{
   background:transparent;
   border: none;
 }
-nav ul.pagination li.active a{
+nav ul.pagination li.act a{
   background: #ACB6E5;
 }

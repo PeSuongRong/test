@@ -30,5 +30,29 @@ const data = [
         dataPass : "456789",
         dataDate : "29/07/2018",
         dataPosition : "3"
+    },
+    {
+        dataCode : "005",
+        dataName : "Phùng Thị Dung",
+        dateEmail : "phungdung@gmail.com",
+        dataPass : "456789",
+        dataDate : "29/08/2018",
+        dataPosition : "2"
+    },
+    {
+        dataCode : "006",
+        dataName : "Ninh Thị Qunag",
+        dateEmail : "quang@gmail.com",
+        dataPass : "456789",
+        dataDate : "25/08/2018",
+        dataPosition : "3"
+    },
+    {
+        dataCode : "007",
+        dataName : "Ninh Thị Mây",
+        dateEmail : "may@gmail.com",
+        dataPass : "456789",
+        dataDate : "29/06/2018",
+        dataPosition : "3"
     }
 ]

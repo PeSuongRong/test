@@ -3,6 +3,130 @@
 //     console.log($(this).val());
 //    })
 
+//kiểm tra dữ liệu
+//bước 1: Tạo array thông báo
+var mangThongBao = ["Vui lòng nhập mã nhân viên chỉ có số!",
+                "Vui lòng nhận họ tên nhân viên!",
+                "Vui lòng nhập Email!",
+                "Vui lòng nhập mật khẩu!",
+                "Vui lòng chọn chức vụ!",
+                "Họ tên phải là ký tự!",
+                "Mật khẩu phải có ít nhất 8 ký tự.",
+                "Email chưa đúng định dạng.",
+                "Vui lòng chọn ngày"];
+
+function getElement(e){
+	return document.getElementById(e);
+}
+
+function KiemTraDuLieu(idField, idThongBao, indexChuoiTB, typeKiemTra, typeDinhDang, minLength){
+	var kq = false;
+
+	var idField = getElement(idField);
+	var thongBao = getElement(idThongBao);
+
+	switch (typeKiemTra) {
+		case 1: //Kiểm tra dữ liệu bắt buộc
+			kq = KiemTraNhap(idField);
+		break;
+		case 2: //Kiểm tra dữ liệu định dạng
+			kq = KiemTraDinhDang(idField, typeDinhDang);
+		break;
+		case 3: //Kiểm tra độ dài chuỗi
+			kq = KiemTraDoDaiChuoi(idField, minLength);
+		break;
+		case 4: //Kiểm tra dữ liệu chọn
+			kq = KiemTraChon(idField);
+		break;
+	}
+
+	if (kq){
+		thongBao.style.display = "none";
+	} else {
+		thongBao.style.display = "block";
+		thongBao.innerHTML = mangThongBao[indexChuoiTB];
+	}
+
+	return kq;
+}
+function KiemTraNhap(idField){
+	if (idField.value === ""){
+		return false;
+	} else {
+		return true;
+	}
+}
+function KiemTraChon(idField){
+	if (idField.selectedIndex === 0){
+		return false;
+	} else {
+		return true;
+	}
+}
+function KiemTraDinhDang(idField, typeDinhDang){
+	var mangKiTu;
+
+	switch (typeDinhDang){
+		case 1: // Định dạng ký tự
+			mangKiTu = /^[A-Za-z]\/+$/;
+		break;
+		case 2: // Định dạng Email
+			mangKiTu = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+		break;
+		case 3:
+			mangKiTu = /^(0?[1-9]|1[0-2])\/(0?[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;
+		break;
+	}
+
+	if (!idField.value.match(mangKiTu)){
+		return false;
+	} else {
+		return true;
+	}
+}
+function KiemTraDoDaiChuoi(idField, minLength){
+	if (idField.value.length < minLength){
+		return false;
+	} else {
+		return true;
+	}
+}
+function isNumberKey(evt)
+    {
+        let tb = document.getElementById('tbMaNV');
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+       if(charCode == 59 || charCode == 46)
+        {
+            return true;}
+        else{
+            tb.style.display="block";
+            tb.innerHTML = "Vui lòng chỉ nhập số";
+        }
+       if (charCode > 31 && (charCode < 48 || charCode > 57))
+          return false;
+          tb.style.display="none";
+       return true;
+    }
+function KtHopLe(){
+	var kq1 = KiemTraDuLieu("msnv", "tbMaNV", 0, 1, 0, 0, 0);
+
+	var kq2 = KiemTraDuLieu("name", "tbTen", 1, 1, 0, 0, 0);
+	var kq3 = KiemTraDuLieu("email", "tbEmail", 2, 1, 0, 0, 0);
+	if (kq3){
+		kq3 = KiemTraDuLieu("email", "tbEmail", 7, 2, 2, 0, 0);
+	}
+	var kq4 = KiemTraDuLieu("password", "tbMatKhau", 3, 1, 0, 0, 0);
+	if (kq4){
+		kq4 = KiemTraDuLieu("password", "tbMatKhau", 6, 3, 0, 8);
+	}
+	var kq5 = KiemTraDuLieu("datepicker", "tbNgay", 8, 2, 3, 0, 0);
+	var kq6 = KiemTraDuLieu("chucvu", "tbChucVu", 4, 4, 0, 0, 0);
+
+	if (kq1 && kq2 && kq3 && kq4 && kq5 && kq6)
+		return true;
+	else
+		return false;
+}
 
 
 let Company = new company();
@@ -41,7 +165,22 @@ const deleteForm=()=>{
     let dd = dmy.getDay();
     let mm = dmy.getMonth();
     let yy = dmy.getFullYear();
+    if(dd<10){
+        dd = '0'+dd;
+    }
+    if(mm<10){
+        mm = '0'+mm;
+    }
     document.getElementById('datepicker').value = `${dd}/ ${mm} / ${yy}`;
+    //không tối tưu
+    // for(let i = 0;  i <=5; i++){
+    //     document.getElementsByClassName('sp-thongbao')[i].innerHTML="";
+    // }
+    //tối ưu
+    let classSpan = document.getElementsByClassName('sp-thongbao');
+    for(let elementSpan of classSpan){
+        elementSpan.innerHTML="";
+    }
 }
 document.getElementById('btnThem').addEventListener('click',()=>{
     deleteForm();
@@ -153,16 +292,22 @@ document.getElementById('btnCapNhatNV').addEventListener('click', ()=>{
 
 //click chuyển trang
 click_number_page = (id_number_page) =>{
+    document.getElementById('page_1').setAttribute("class", "act");
     document.getElementById(id_number_page).addEventListener('click',()=>{
         let array_id_page =id_number_page.split('_');
         first_empl = array_id_page[1];
         showListEmployee(Company.list_eml, first_empl);
-        document.getElementById(id_number_page).setAttribute("class", "active");
+        if(id_number_page !== 'page_1'){
+            document.getElementById(id_number_page).setAttribute("class", "act");
+            document.getElementById('page_1').removeAttribute('class');
+        }
     })
 }
 
 //add nhân viên
 document.getElementById('btnThemNV').addEventListener('click', ()=>{
+    var kiemTraHopLe = KtHopLe();
+    if (kiemTraHopLe){
     let new_id = document.getElementById('msnv').value;
     let new_name = document.getElementById('name').value;
     let new_email = document.getElementById('email').value;
@@ -174,6 +319,7 @@ document.getElementById('btnThemNV').addEventListener('click', ()=>{
     Company.addEml(new_array);
     showListEmployee(Company.list_eml,first_empl);
     deleteForm();
+    }
 })
 
 //tìm kiếm
@@ -183,4 +329,19 @@ document.getElementById('searchName').addEventListener('keyup', ()=>{
     let first_empl = 1;
     showListEmployee(array.list_eml,first_empl);
 })
+
+//sắp xem theo mã
+document.getElementById("SapXepTang").addEventListener("click", ()=>{
+    document.getElementById("SapXepTang").style.display = "none";
+    document.getElementById("SapXepGiam").style.display = "inline-block";
+    Company.sort_employ(1);
+    showListEmployee(Company.list_eml, 1);
+})
+document.getElementById("SapXepGiam").addEventListener("click", ()=>{
+    document.getElementById("SapXepGiam").style.display = "none";
+    document.getElementById("SapXepTang").style.display = "inline-block";
+    Company.sort_employ(2);
+    showListEmployee(Company.list_eml, 1);
+})
 showListEmployee(Company.list_eml, first_empl);
+
